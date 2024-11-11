@@ -46,21 +46,22 @@ def getFinish(frame):
     if(np.mean(frame)<1):
         return False
     # print(np.mean(frame))
-    cv2.imshow("DebugFinish",frame)
+    # cv2.imshow("DebugFinish",frame)
     frame = getAverageFrame.highPass(frame)
     res = cv2.matchTemplate(frame,FINISH,cv2.TM_CCOEFF_NORMED)
     loc = np.max(res)
     return (loc > threshold)==True
 def getGo(frame):
-    threshold = 0.05
-    frame = getAverageFrame.grayscale(cropFrame(frame,24.1,33,76.1,53))
+    threshold = 0.1
+    frame = getAverageFrame.grayscale(cropFrame(frame,36.875,32.625,63.195,54.195))
     if(np.mean(frame)<1):
         return False
     # print(np.mean(frame))
-    cv2.imshow("DebugGo",frame)
+    # cv2.imshow("DebugGo",frame)
     frame = getAverageFrame.highPass(frame)
     res = cv2.matchTemplate(frame,GO,cv2.TM_CCOEFF_NORMED)
     loc = np.max(res)
+    # print(loc)
     return (loc > threshold)==True
      
      

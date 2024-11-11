@@ -24,7 +24,7 @@ def createFinish():
     cv2.imwrite("Go&Finish/Finish.jpg",frame)
 def createGo():
     frame = getAverageFrame.getAverageFrame(getAverageFrame.imagesFromFilter(FILES,["Go!"]))
-    frame = cropFrame(frame,24.1,33,76.1,53)
+    frame = cropFrame(frame,36.875,32.625,63.195,54.195)
     cv2.imwrite("Go&Finish/Go!.jpg",frame)
 createGo()
 createPlaces()

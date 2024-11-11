@@ -8,7 +8,8 @@ import videoDerive
 videoSource =[]
 # videoSource.append(videoDerive.VideoCap(cv2.VideoCapture(0),"Cam"))
 # videoSource.append(videoDerive.VideoCap(cv2.VideoCapture("mkVidT.mkv"),"Video1"))
-videoSource.append(videoDerive.VideoCap(cv2.VideoCapture("mkVid.mkv"),"Video3"))
+for i in range(4):
+    videoSource.append(videoDerive.VideoCap(cv2.VideoCapture(0),"Video"+str(i)))
 # videoSource.append(videoDerive.VideoCap(cv2.VideoCapture("mkTrim.mkv"),"Video4"))
 while(True):
     for video in videoSource:

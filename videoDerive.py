@@ -4,7 +4,7 @@ import getAverageFrame
 from collections import Counter
 import numpy as np
 TALLY_LIMIT = 1
-FRAME_MIX_LIMIT = 5
+FRAME_MIX_LIMIT = 3
 class VideoCap:
     def __init__(self,cv2Video,name):
         self.currentPlace = 0
@@ -30,14 +30,12 @@ class VideoCap:
         return getAverageFrame.getAverageFrameColor(self.frameMix)
     
     def getCurrentFrame(self):
-        self.cap.read()
-
         ret, frame = self.cap.read()
         if(frame.shape[:1]!=[720,1280]):
             frame = cv2.resize(frame,(1280,720))
         if ret == True:
             frame=self.addFrame(frame)
-            cv2.imshow('Frame'+str(self),frame)
+            # cv2.imshow('Frame'+str(self),frame)
             self.updateRacing(frame)
             # currentPlace=self.addTally(place[1])
             cv2.waitKey(1)
@@ -58,8 +56,8 @@ class VideoCap:
                         print(self.name + " moved to " + str(place))
                     self.currentPlace = place
                 else:
-                    if(not(self.placeChanging)):
-                        print(self.name + " changing placement")
+                    # if(self.placeChanging==0):
+                    #     print(self.name + " changing placement")
                     self.placeChanging = 1
                 if(deriveAttributes.getFinish(frame)):
                     self.racing = 0
