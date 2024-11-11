@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import glob
 import os
-import deriveAttributes
+# import deriveAttributes
 
 TEMPLATE_DIR = "MKImageData"
 types = ["Place","Finish","Drift"]
@@ -34,10 +34,10 @@ def main():
     # cv2.waitKey(0)
     # cv2.imshow('pic',getAverageFrameColor(filesToImage(filterString(files,["Drive"])))) 
     # cv2.imshow('Everything.10-30.'+".jpg", getAverageFrameColor(imagesFromFilter(files,["Drive"])))
-    for i in range(12):
-        frame=getAverageFrameColor(filesToImage(filterPlace(files,i+1)))
-        cv2.imshow('Debug' + str(i+1),frame)
-        cv2.imwrite("PlaceTemplates/" + str(i+1)+"Place.jpg",highPass(deriveAttributes.cropFrame(frame,85, 79, 94.5, 95)))
+    # for i in range(12):
+    #     frame=getAverageFrameColor(filesToImage(filterPlace(files,i+1)))
+    #     cv2.imshow('Debug' + str(i+1),frame)
+    #     cv2.imwrite("PlaceTemplates/" + str(i+1)+"Place.jpg",highPass(deriveAttributes.cropFrame(frame,85, 79, 94.5, 95)))
     # cv2.imshow('pic2',getAverageFrameColor([getAverageFrameColor(filesToImage(filterPlace(files, 1))[:3]),np.tile(getAverageFrame(filesToImage(filterPlace(files, 1)))[...,None],3)]))
     cv2.waitKey(0)
 
@@ -111,7 +111,8 @@ def getAverageFrameColor(frameLine):
 
 def highPass(frame):
     passF = frame - cv2.GaussianBlur(frame,(21,21),3)+127
-    passF = cv2.cvtColor(passF, cv2.COLOR_BGR2GRAY)
+    if(len(passF.shape)>2):
+        passF = cv2.cvtColor(passF, cv2.COLOR_BGR2GRAY)
     passF = cv2.Laplacian(passF, -1)
     return passF
 def grayscale(frame):

@@ -1,7 +1,15 @@
 import getAverageFrame
 import deriveAttributes
 import cv2
+import videoDerive
+# getAverageFrame.main()
 
-getAverageFrame.main()
-
-print(deriveAttributes.getPlace(cv2.imread("MKImageData/TheUnlabeleds/2024103017090500_s.jpg")))
+# print(deriveAttributes.getPlace(cv2.imread("MKImageData/TheUnlabeleds/2024103017090500_s.jpg")))
+videoSource =[]
+# videoSource.append(videoDerive.VideoCap(cv2.VideoCapture(0),"Cam"))
+# videoSource.append(videoDerive.VideoCap(cv2.VideoCapture("mkVidT.mkv"),"Video1"))
+videoSource.append(videoDerive.VideoCap(cv2.VideoCapture("mkVid.mkv"),"Video3"))
+# videoSource.append(videoDerive.VideoCap(cv2.VideoCapture("mkTrim.mkv"),"Video4"))
+while(True):
+    for video in videoSource:
+        video.getCurrentFrame()
