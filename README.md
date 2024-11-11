@@ -1,5 +1,5 @@
 # Mariokart8-Placement-Recog
-Project to identify and output what placement a player is in based on image data and templates
+Project to identify and output what placement a player is in based on image data and templates (Splitscreen not currently supported)
 
 Use main.py to test (Currently opens 4 instances of primary webcam)
 
