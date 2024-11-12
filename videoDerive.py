@@ -38,7 +38,7 @@ class VideoCap:
             # cv2.imshow('Frame'+str(self),frame)
             self.updateRacing(frame)
             # currentPlace=self.addTally(place[1])
-            cv2.waitKey(1)
+            # cv2.waitKey(1)
     def updateRacing(self,frame):
         if(self.racing == 0):
             if(deriveAttributes.getGo(frame)):
