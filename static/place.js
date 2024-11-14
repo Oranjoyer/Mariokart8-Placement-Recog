@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded",(event)=>{
     {
         atlasWhite.addEventListener("load",(e)=>{
             ready=true;
-            setInterval(refreshData,50)
+            setInterval(refreshData,500)
         })
     }
     else
