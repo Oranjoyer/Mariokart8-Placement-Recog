@@ -21,6 +21,30 @@ def main():
     
     @app.route('/')
     def page():
+        data = {"number":-1,"type":"both"}
+        return render_template('places.html',data=json.dumps(data))
+    @app.route('/place')
+    def placeSpot():
+        data = {'number':-1,'type':'place'}
+        return render_template('places.html',data=json.dumps(data))
+    @app.route('/name')
+    def nameSpot():
+        data = {'number':-1,'type':'name'}
+        return render_template('places.html',data=json.dumps(data))
+    @app.route('/<number>')
+    def cameraSpot(number):
+        data = {"number":number,"type":"both"}
+        return render_template('places.html', data=json.dumps(data))
+    @app.route('/<number>/place')
+    def cameraPlaceSpot(number):
+        data = {'number':number,'type':'place'}
+        return render_template('places.html',data=json.dumps(data))
+    @app.route('/<number>/name')
+    def cameraNameSpot(number):
+        data = {'number':number,'type':'name'}
+        return render_template('places.html',data=json.dumps(data))
+    
+    def cameraSpot():
         return render_template('places.html')
     @app.route('/manage', methods=["POST","GET"])
     def management():
@@ -36,11 +60,13 @@ def main():
     @app.route("/start")
     def start():
         manageCollectionFunction(True)
+        print("Recognition Started")
         return "Recognition Started"
     @app.route("/stop")
     def stop():
         manageCollectionFunction(True)
-        "Recognition Stopped"
+        print("Recognition Stopped")
+        return "Recognition Stopped"
     @app.route("/camList")
     def cameras():
         if(len(cameraList)==0):
@@ -57,14 +83,14 @@ def main():
         # response.headers.set('Content-Type','image/png')
         return base64.b64encode(image)
         
-    @app.route("/startCollection")
-    def startCollection():
-        manageCollectionFunction(True)
-    @app.route("/stopCollection")
-    def stopCollection():
-        manageCollectionFunction(False)
-        print("Data Collection Stopped")
-        return "Data Collection Stopped"
+    # @app.route("/startCollection")
+    # def startCollection():
+    #     manageCollectionFunction(True)
+    # @app.route("/stopCollection")
+    # def stopCollection():
+    #     manageCollectionFunction(False)
+    #     print("Data Collection Stopped")
+    #     return "Data Collection Stopped"
     @app.route('/PlaceAtlasB.png')
     def placeAtlasB():
         return render_template("PlaceAtlasB.png")
@@ -103,9 +129,13 @@ def main():
         return render_template("manage.js")
     @app.route('/newRodin.otf')
     def font():
-        return render_template('newRodin.otf')
+        return render_template("newRodin.otf")
     @app.route('/jsonObj')
     def data():
+        # print(jsonObj)
+        return jsonObj
+    @app.route('/<number>/jsonObj')
+    def camJson(number):
         # print(jsonObj)
         return jsonObj
     @app.route('/inRace')

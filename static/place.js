@@ -6,17 +6,31 @@ let atlasBlue;
 let flag;
 let ready=false;
 let firstTime = true;
+let url = window.page;
+let externalData;
 document.addEventListener("DOMContentLoaded",(event)=>{
-    atlasB = document.getElementById("atlasBack");
-    atlasRed = document.getElementById("atlasRed");
-    atlasBlue = document.getElementById("atlasBlue");
-    atlasWhite = document.getElementById("atlasWhite");
-
-    flag = document.getElementById("flag")
-    atlasWhite.addEventListener("load",(e)=>{
+    externalData = JSON.parse(document.getElementById("externalData").getAttribute("data"));
+    if(externalData.type!="name")
+    {
+        atlasB = document.getElementById("atlasBack");
+        atlasRed = document.getElementById("atlasRed");
+        atlasBlue = document.getElementById("atlasBlue");
+        atlasWhite = document.getElementById("atlasWhite");
+        flag = document.getElementById("flag")
+    }
+    // console.log(document.getElementById("externalData").getAttribute("data"));
+    if(externalData.type!="name")
+    {
+        atlasWhite.addEventListener("load",(e)=>{
+            ready=true;
+            setInterval(refreshData,50)
+        })
+    }
+    else
+    {
         ready=true;
-        setInterval(refreshData,100)
-    })
+        setInterval(refreshData,1000);
+    }
 })
 function refreshData()
 {
@@ -31,6 +45,12 @@ function refreshData()
 }
 function updateData(data)
 {
+    let pageType=externalData.type
+    let camNum=externalData.number
+    if(camNum!=-1)
+    {
+        data=[data[camNum]]
+    }
     // console.log("Length of Data: "+data.length)
     if(firstTime||document.getElementsByClassName("player").length!=data.length)
     {
@@ -40,19 +60,28 @@ function updateData(data)
         {
             let doc = document.createElement("div");
             doc.className = "player";
-            let canvas = document.createElement("canvas")
-            canvas.className = "playerCanvas";
-            doc.appendChild(canvas)
-            let name = document.createElement("p")
-            name.textContent = player.name
-            name.className = "playerName"
-            doc.appendChild(name)
+            if(pageType!="name")
+            {
+                let canvas = document.createElement("canvas")
+                canvas.className = "playerCanvas";
+                doc.appendChild(canvas)
+                // console.log("got here")
+            }
+            if(pageType!="place")
+            {
+                let name = document.createElement("p")
+                name.textContent = player.name
+                name.classList=["playerName"];
+                if(pageType!="name")
+                    name.classList.add("nameText")
+                doc.appendChild(name)
+            }
             document.getElementById("playerList").appendChild(doc);
         }
     }
     firstTime = false;
     // data = document.getElementById("stuff");
-    if(ready==false)
+    if(ready==false||pageType=="name")
         return;
     let canvases = document.getElementsByClassName("playerCanvas");
     // console.log(canvases)

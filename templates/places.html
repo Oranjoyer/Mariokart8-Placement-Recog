@@ -40,6 +40,12 @@
             font-family: "New Rodin";
             font-size: 200%;
             text-align: center;
+            text-shadow:1px 1px white;
+        }
+        .nameText
+        {
+            height: 128px;
+            text-align:start;
         }
     </style>
 </head>
@@ -50,8 +56,9 @@
     </div>
     <div id="extraSection"></div>
 </body>
-<script src="place.js"></script>
-<meta id="pyData" data="{{ inputData }}">
+<meta id="externalData" data="{{ data }}">
+<script src="{{ url_for('static', filename='place.js') }}"></script>
+<!-- <meta id="pyData" data="{{ inputData }}"> -->
 <!-- <img src="{{ url_for('static', filename='PlaceAtlasB.png') }}" id="atlas" style="visibility: hidden"></img> -->
 <img src="{{ url_for('static', filename='PlaceAtlas.png') }}" id="atlasBack" style="visibility: hidden"></img>
 <!-- <img src="{{ url_for('static', filename='PlaceAtlasG.png') }}" id="atlasFront" style="visibility: hidden"></img> -->
