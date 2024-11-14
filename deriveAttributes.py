@@ -5,6 +5,7 @@ import getAverageFrame
 places = []
 FINISH=getAverageFrame.grayscale(cv2.imread("Go&Finish/Finish.jpg"))
 GO=getAverageFrame.grayscale(cv2.imread("Go&Finish/Go!.jpg"))
+RANKINGS=getAverageFrame.grayscale(cv2.imread("RankTemplates/Rankings.jpg"))
 for i in range(12):
      places.append(getAverageFrame.grayscale(cv2.imread("PlaceTemplates/" + str(i+1) + "Place.jpg")))
 
@@ -63,7 +64,18 @@ def getGo(frame):
     loc = np.max(res)
     # print(loc)
     return (loc > threshold)==True
-     
+def getRankings(frame):
+    threshold = 0.1
+    frame = getAverageFrame.grayscale(cropFrame(frame,42.89,6.5,42.89+53.47,14))
+    if(np.mean(frame)<1):
+        return False
+    # print(np.mean(frame))
+    # cv2.imshow("DebugGo",frame)
+    frame = getAverageFrame.highPass(frame)
+    res = cv2.matchTemplate(frame,RANKINGS,cv2.TM_CCOEFF_NORMED)
+    loc = np.max(res)
+    # print(loc)
+    return (loc > threshold)==True
      
 
 

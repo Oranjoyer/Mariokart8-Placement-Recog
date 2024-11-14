@@ -3,19 +3,27 @@ import deriveAttributes
 import getAverageFrame
 from collections import Counter
 import numpy as np
+from threading import Thread
 TALLY_LIMIT = 1
 FRAME_MIX_LIMIT = 3
+
 class VideoCap:
     def __init__(self,cv2Video,name):
+        self.currentFrame = cv2Video.read()
         self.currentPlace = 0
         self.racing = 0
         self.placeChanging = 0
+        self.finished = 0
         self.cap = cv2Video
         self.finalPlace=-1
         self.placeTally = []
         self.frameBuffer = []
         self.frameMix = []
         self.name = name
+        self.team = "White"
+    def updateFrame(self):
+            ret, frame = self.cap.read()
+            self.currentFrame = ret, self.addFrame(frame)
     def addTally(self,place):
         if(TALLY_LIMIT==1):
             return place
@@ -30,11 +38,12 @@ class VideoCap:
         return getAverageFrame.getAverageFrameColor(self.frameMix)
     
     def getCurrentFrame(self):
-        ret, frame = self.cap.read()
+        # self.updateFrame()
+        ret, frame = self.currentFrame
         if(frame.shape[:1]!=[720,1280]):
             frame = cv2.resize(frame,(1280,720))
         if ret == True:
-            frame=self.addFrame(frame)
+            # frame=self.addFrame(frame)
             # cv2.imshow('Frame'+str(self),frame)
             self.updateRacing(frame)
             # currentPlace=self.addTally(place[1])
@@ -61,13 +70,20 @@ class VideoCap:
                     self.placeChanging = 1
                 if(deriveAttributes.getFinish(frame)):
                     self.racing = 0
+                    self.finished = 1
                     print(self.name + " Finished")
-        if ((self.racing==0) & (self.finalPlace==0)):
-            place = deriveAttributes.getPlace(frame)[1]
-            if(place > 0):
-                self.finalPlace=place
-                self.currentPlace=place
-                print(self.name + " Final Place is " + str(place))
+        if self.racing==0:
+            if (self.finalPlace==0):
+                place = deriveAttributes.getPlace(frame)[1]
+                if(place > 0):
+                    self.finalPlace=place
+                    self.currentPlace=place
+                    print(self.name + " Final Place is " + str(place))
+            else: 
+                if(self.finished==1):
+                    rankScreen = deriveAttributes.getRankings(frame)
+                    if(rankScreen):
+                        self.finished=0
 
     def __str__(self) -> str:
         return self.name

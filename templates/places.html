@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<head>
+    <style>
+        @font-face {
+            font-family: 'New Rodin';
+            src: url('{{url_for('static',filename='newRodin.otf')}}');
+        }
+        .m{
+            overflow:hidden;
+            float: left;
+            /* --main-width: calc(100%*0.555); */
+        }
+        .playerList
+        {
+            display:flex;
+            flex-direction:column;
+            /* height:128px*4; */
+            width:100%;
+            align-items:center;
+            margin-top:-3%;
+        }
+        .player
+        {
+            display:flex;
+            margin-top:3%;
+            align-items:left;
+        }
+        .playerCanvas
+        {
+            height:128px;
+            width:180px;
+        }
+        .cacheCanvas
+        {
+            height:128px;
+            width:180px;
+        }
+        .playerName
+        {
+            font-family: "New Rodin";
+            font-size: 200%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="m">
+    <div class="playerList" id="playerList">  
+    </div>
+    </div>
+    <div id="extraSection"></div>
+</body>
+<script src="place.js"></script>
+<meta id="pyData" data="{{ inputData }}">
+<!-- <img src="{{ url_for('static', filename='PlaceAtlasB.png') }}" id="atlas" style="visibility: hidden"></img> -->
+<img src="{{ url_for('static', filename='PlaceAtlas.png') }}" id="atlasBack" style="visibility: hidden"></img>
+<!-- <img src="{{ url_for('static', filename='PlaceAtlasG.png') }}" id="atlasFront" style="visibility: hidden"></img> -->
+<img src="{{ url_for('static', filename='PlaceAtlasRed.png') }}" id="atlasRed" style="visibility: hidden"></img>
+<img src="{{ url_for('static', filename='PlaceAtlasBlue.png') }}" id="atlasBlue" style="visibility: hidden"></img>
+<img src="{{ url_for('static', filename='PlaceAtlasWhite.png') }}" id="atlasWhite" style="visibility: hidden"></img>
+<img src="{{ url_for('static', filename='FinishFlag.png') }}" id="flag" style="visibility: hidden"></img>
+<!-- <div class="player">
+            <canvas class="playerCanvas" style="order:1">
+            </canvas>
+            <p class="playerName"></p>
+        </div> -->

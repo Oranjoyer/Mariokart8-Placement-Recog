@@ -26,8 +26,13 @@ def createGo():
     frame = getAverageFrame.getAverageFrame(getAverageFrame.imagesFromFilter(FILES,["Go!"]))
     frame = cropFrame(frame,36.875,32.625,63.195,54.195)
     cv2.imwrite("Go&Finish/Go!.jpg",frame)
+def createRankings():
+    frame = getAverageFrame.getAverageFrame(getAverageFrame.imagesFromFilter(FILES,["Rankings"]))
+    frame = cropFrame(frame,42.89,6.5,42.89+53.47,14)
+    cv2.imwrite("RankTemplates/Rankings.jpg",frame)
 createGo()
 createPlaces()
 createFinish()
+createRankings()
 
     
