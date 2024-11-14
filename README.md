@@ -7,7 +7,7 @@ Base Placements and Usernames
 localhost:8000
 
 You can select a specific piece with
-localhost:8000/<Camera Index>/<name or place (omit for both)>
+localhost:8000/'<Camera Index>'/'<name or place (omit for both)>'
 
 Use fullscreen (No Nintendo Switch Overscan Scaling) video capture of Mario Kart Gameplay before a race starts and see the magic unfold
 
