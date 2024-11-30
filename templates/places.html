@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <head>
     <style>
+        .body{
+            font-size: 16px;
+            vertical-align: middle;
+        }
         @font-face {
-            font-family: 'New Rodin';
-            src: url('{{url_for('static',filename='newRodin.otf')}}');
+            font-family: 'Bai Jam';
+            src: url('{{url_for('static',filename='BaiJam.ttf')}}');
         }
         .m{
             overflow:hidden;
@@ -15,37 +19,58 @@
             display:flex;
             flex-direction:column;
             /* height:128px*4; */
-            width:100%;
-            align-items:center;
-            margin-top:-3%;
+            /* width:100%; */
+            align-items:left;
+            margin-top:-50px;
         }
         .player
         {
             display:flex;
-            margin-top:3%;
+            margin-top:50px;
             align-items:left;
         }
         .playerCanvas
         {
             height:128px;
             width:180px;
+            max-height: 128px;
+            min-height: 128px;
+            max-width: 180px;
+            min-width: 180px;
+            /* background-color: red; */
         }
         .cacheCanvas
         {
             height:128px;
             width:180px;
+            max-height: 128px;
+            min-height: 128px;
         }
         .playerName
         {
-            font-family: "New Rodin";
-            font-size: 200%;
-            text-align: center;
-            text-shadow:1px 1px white;
+            font-family: "Bai Jam";
+            font-size: 3.5rem;
+            text-align: left;
+            vertical-align:bottom;
+            /* text-shadow:1px 1px #ffffff; */
+            /* background-color: brown; */
+            min-height: 128px;
+            max-height: 128px;
         }
         .nameText
         {
             height: 128px;
+            max-height: 128px;
+            min-height: 128px;
             text-align:start;
+        }
+        .textDiv
+        {
+            margin-top:-16px;
+            vertical-align: bottom;
+            max-height: 128px;
+            min-height: 128px;
+            /* background-color: aqua; */
         }
     </style>
 </head>

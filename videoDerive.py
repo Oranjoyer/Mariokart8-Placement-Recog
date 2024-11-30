@@ -5,10 +5,10 @@ from collections import Counter
 import numpy as np
 from threading import Thread
 TALLY_LIMIT = 1
-FRAME_MIX_LIMIT = 3
+FRAME_MIX_LIMIT = 5
 
 class VideoCap:
-    def __init__(self,cv2Video,name):
+    def __init__(self,cv2Video,name,order):
         self.currentFrame = cv2Video.read()
         self.currentPlace = 0
         self.racing = 0
@@ -21,6 +21,9 @@ class VideoCap:
         self.frameMix = []
         self.name = name
         self.team = "White"
+        self.order = order
+        self.crop = [0,0,100,100]
+        self.scale = 1
     def updateFrame(self):
             ret, frame = self.cap.read()
             self.currentFrame = ret, self.addFrame(frame)
@@ -39,49 +42,50 @@ class VideoCap:
     
     def getCurrentFrame(self):
         # self.updateFrame()
+        # ret, frame = self.currentFrame[0], self.addFrame(self.currentFrame[1])
         ret, frame = self.currentFrame
+        if(type(frame)==type(None)):
+            print("Error, No image")
+            return
+        if(self.crop != [0,0,100,100]):
+            frame = deriveAttributes.cropFrame(frame,self.crop[0],self.crop[1],self.crop[2],self.crop[3])
         if(frame.shape[:1]!=[720,1280]):
             frame = cv2.resize(frame,(1280,720))
         if ret == True:
-            # frame=self.addFrame(frame)
-            # cv2.imshow('Frame'+str(self),frame)
             self.updateRacing(frame)
-            # currentPlace=self.addTally(place[1])
-            # cv2.waitKey(1)
     def updateRacing(self,frame):
         if(self.racing == 0):
-            if(deriveAttributes.getGo(frame)):
+            if(deriveAttributes.getGo(frame,self.scale)):
                 print(self.name + " race started")
                 # print(np.mean(frame))
                 self.racing = 1
                 self.finalPlace = 0
         else:
             if(self.racing):
-                place = deriveAttributes.getPlace(frame)[1]
-                # print(place)
+                confidence, place = deriveAttributes.getPlace(frame,self.scale)
+                # print((confidence, place))
                 if(place != 0):
                     self.placeChanging=0
                     if(self.currentPlace!=place):
                         print(self.name + " moved to " + str(place))
                     self.currentPlace = place
                 else:
-                    # if(self.placeChanging==0):
-                    #     print(self.name + " changing placement")
                     self.placeChanging = 1
-                if(deriveAttributes.getFinish(frame)):
+                if(deriveAttributes.getFinish(frame,self.scale)):
                     self.racing = 0
                     self.finished = 1
                     print(self.name + " Finished")
         if self.racing==0:
             if (self.finalPlace==0):
-                place = deriveAttributes.getPlace(frame)[1]
+                confidence, place = deriveAttributes.getPlace(frame,self.scale)
                 if(place > 0):
+                    # print(confidence)
                     self.finalPlace=place
                     self.currentPlace=place
                     print(self.name + " Final Place is " + str(place))
             else: 
                 if(self.finished==1):
-                    rankScreen = deriveAttributes.getRankings(frame)
+                    rankScreen = deriveAttributes.getRankings(frame,self.scale)
                     if(rankScreen):
                         self.finished=0
 

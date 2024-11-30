@@ -1,0 +1,7 @@
+
+/.winenv
+/.virtenv
+/MKImageData
+/.vscode
+/__pycache__
+*.mkv

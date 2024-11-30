@@ -10,6 +10,7 @@ videoSource =[]
 # videoSource.append(videoDerive.VideoCap(cv2.VideoCapture("mkVidT.mkv"),"Video1"))
 for i in range(4):
     videoSource.append(videoDerive.VideoCap(cv2.VideoCapture(1),"Video"+str(i)))
+    videoSource[i].quadrantCrop(((i+1)*50)%100,((i+1)*50)%100)
 # videoSource.append(videoDerive.VideoCap(cv2.VideoCapture("mkTrim.mkv"),"Video4"))
 while(True):
     for video in videoSource:

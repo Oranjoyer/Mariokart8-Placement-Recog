@@ -1,19 +1,30 @@
 <!DOCTYPE html>
 <head>
-
+    <style>
+        .inactive
+        {
+            visibility: hidden;
+        }
+        .active
+        {
+            visibility: visible;
+        }
+    </style>
 </head>
 <body>
     <div class="camera" id="cameraList">
         
     </div>
-    <button id="refreshCams" onclick="setCamForm()">Update Images</button>
-    <button id="sendCams" onclick="setCameras()">StartCams</button>
+    <button id="refreshCams" onclick="retrieveCams()">Update Images</button>
+    <!-- <button id="sendCams" onclick="setCameras()">StartCams</button> -->
     <button id="start" onclick="startReading()">Start</button>
-    <button id="start" onclick="stopReading()">Stop</button>
-    <button id="putInRace" onclick="putInRace()">Players Are In a Race</button>
-    <button id="TeamRed" onclick="setRed()">Red Team</button>
-    <button id="TeamRed" onclick="setBlue()">Blue Team</button>
-    <button id="TeamRed" onclick="setNone()">No Team</button>
+    <button id="stop" onclick="stopReading()" class="inactive videoManage">Stop</button>
+    <button id="putInRace" onclick="putInRace()" class="inactive videoManage">Players Are In a Race</button>
+    <button id="TeamRed" onclick="setRed()" class="inactive videoManage">Red Team</button>
+    <button id="TeamRed" onclick="setBlue()" class="inactive videoManage">Blue Team</button>
+    <button id="TeamRed" onclick="setNone()" class="inactive videoManage">No Team</button>
+    <button id="DisableOBSMode" onclick="disableOBS()" class="inactive" style="display: block;">Disable OBS Mode</button>
+    <!-- <button id="Toggle Sort" onclick="toggleOrder()">Toggle Place Sort</button> -->
 
 </body>
 <script src="manage.js"></script>

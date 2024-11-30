@@ -6,7 +6,9 @@ let atlasBlue;
 let flag;
 let ready=false;
 let firstTime = true;
-let url = window.page;
+let dataRefresh = true;
+let sortByPlace = false;
+// let url = window.page;
 let externalData;
 document.addEventListener("DOMContentLoaded",(event)=>{
     externalData = JSON.parse(document.getElementById("externalData").getAttribute("data"));
@@ -37,11 +39,24 @@ function refreshData()
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function(){
         if(this.readyState==4&&this.status==200&&this.responseText!="")
-        updateData(JSON.parse(this.responseText));
-        // console.log(this.responseText);
+        {
+            // console.log(this.responseText);
+            respJson = JSON.parse(this.responseText)
+            console.log(respJson[1] + "TestVal: "+ (respJson[1]!='True'))
+            if(!dataRefresh&&respJson[1]!='True')
+                dataRefresh=true
+        if(respJson[0]!="")
+            updateData(JSON.parse(respJson[0]));
+        }
     };
     xhttp.open("GET", "jsonObj",true)
     xhttp.send();
+}
+function dataUpdated()
+{
+    let xhttp = new XMLHttpRequest();
+    xhttp.open("GET","dataUpdate",true)
+    xhttp.send()
 }
 function updateData(data)
 {
@@ -52,7 +67,8 @@ function updateData(data)
         data=[data[camNum]]
     }
     // console.log("Length of Data: "+data.length)
-    if(firstTime||document.getElementsByClassName("player").length!=data.length)
+    // sortByPlace = data[0].sortByPlace
+    if(dataRefresh||firstTime||document.getElementsByClassName("player").length!=data.length)
     {
         document.getElementById("playerList").textContent=""
         // console.log("Setting Stuff")
@@ -74,12 +90,33 @@ function updateData(data)
                 name.classList=["playerName"];
                 if(pageType!="name")
                     name.classList.add("nameText")
-                doc.appendChild(name)
+                let textContain = document.createElement("div")
+                textContain.className = "textDiv"
+                textContain.appendChild(name)
+                doc.appendChild(textContain)
             }
             document.getElementById("playerList").appendChild(doc);
         }
+        dataRefresh=false
+        dataUpdated()
     }
     firstTime = false;
+        playerDivs = document.getElementsByClassName("player")
+    // if(sortByPlace)
+    // {
+    //     // for(let i = 0; i < playerDivs.length;i++)
+    //     // {
+    //     //         if(sortByPlace)
+    //     //         {
+    //     //             playerDivs[i].style.order=data[i].place;
+    //     //         }
+    //     //         else
+    //     //         {
+    //     //             doc.style.order=player.order;
+    //     //         }
+    //     // }
+        
+    // }
     // data = document.getElementById("stuff");
     if(ready==false||pageType=="name")
         return;
@@ -102,7 +139,7 @@ function updateData(data)
         displayPlace(data[i].place,currentCanvas,width,height,data[i].team)
         // console.log(data[i].place)
         if(data[i].finished)
-            currentCanvas.drawImage(flag,width-48,0,48,48);
+            currentCanvas.drawImage(flag,width-(180/128)*48,0,(180/128)*48,48);
 
     }
 }
