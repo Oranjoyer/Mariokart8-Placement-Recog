@@ -4,7 +4,7 @@ import getAverageFrame
 from collections import Counter
 import numpy as np
 from threading import Thread
-TALLY_LIMIT = 1
+TALLY_LIMIT = 3
 FRAME_MIX_LIMIT = 5
 
 class VideoCap:
@@ -16,7 +16,7 @@ class VideoCap:
         self.finished = 0
         self.cap = cv2Video
         self.finalPlace=-1
-        self.placeTally = []
+        self.placeTally = [0,0,0]
         self.frameBuffer = []
         self.frameMix = []
         self.name = name
@@ -77,12 +77,13 @@ class VideoCap:
                     print(self.name + " Finished")
         if self.racing==0:
             if (self.finalPlace==0):
-                confidence, place = deriveAttributes.getPlace(frame,self.scale)
+                place = self.addTally(deriveAttributes.getPlace(frame,self.scale)[1])
                 if(place > 0):
                     # print(confidence)
                     self.finalPlace=place
                     self.currentPlace=place
                     print(self.name + " Final Place is " + str(place))
+                    self.placeTally = [0,0,0]
             else: 
                 if(self.finished==1):
                     rankScreen = deriveAttributes.getRankings(frame,self.scale)
