@@ -301,8 +301,8 @@ def checkCameras():
                 break
         else:
             cameraList.append(i)
-            feed.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
-            feed.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+            feed.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+            feed.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
             print(f"Camera {i} has a resolution of {feed.read()[1].shape[1]} x {feed.read()[1].shape[0]}")
         cameraCaptureList.append(feed)
         i+=1
